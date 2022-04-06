@@ -3,6 +3,7 @@
 Required files:
 * circular consensus sequencing (CCS) file `m64044_190724_081616.ccs.bam`
 * yeast genome Fasta file `saccharomyces_cerevisiae.fa`
+* yeast 
 * [`barcode-assign` tools](https://github.com/ingolia-lab/barcode-assign)
 
 ## `pacbio-barcodes.sh`
@@ -22,3 +23,7 @@ From `bc-pbj`:
 * `pacbio-190731-barcode-assign-unique.txt`
 * `pacbio-190731-barcode-assign.bed`
 
+## `pacbio-assign.sh` and `pacbio-assign.R`
+
+Shell script generates `pacbio-190731-facs-assign-gene.bed` and then
+runs the R script to calculate some library statistics.
