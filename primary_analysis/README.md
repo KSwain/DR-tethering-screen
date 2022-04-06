@@ -1,0 +1,24 @@
+# Barcode-to-fragment assignment
+
+Required files:
+* circular consensus sequencing (CCS) file `m64044_190724_081616.ccs.bam`
+* yeast genome Fasta file `saccharomyces_cerevisiae.fa`
+* [`barcode-assign` tools](https://github.com/ingolia-lab/barcode-assign)
+
+## `pacbio-barcodes.sh`
+
+Generates barcode-to-fragment files
+
+From `bc-pbr`:
+* `pacbio-190731-frags.fasta`
+* `pacbio-190731-read-inserts-good.txt`
+* `pacbio-190731-read-fates.txt`
+
+From `bc-pbj`:
+* `pacbio-190731-read-aligns-all.txt`
+* `pacbio-190731-read-aligns-unique.txt`
+* `pacbio-190731-barcode-assign-all.txt`
+* `pacbio-190731-barcode-assign-umabig.txt`
+* `pacbio-190731-barcode-assign-unique.txt`
+* `pacbio-190731-barcode-assign.bed`
+
