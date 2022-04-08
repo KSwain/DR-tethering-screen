@@ -6,7 +6,7 @@ CONSTANT="GATCCTGTAGCCCTAGACTTGATAGC"
 
 BARCODE_ASSIGN="./barcode-assign/target/debug"
 BC_COUNT="${BARCODE_ASSIGN}/bc-count"
-BC_TABULATE="${BARCODE_ASSING}/../../bc-tabulate.py"
+BC_TABULATE="${BARCODE_ASSIGN}/bc-tabulate"
 
 mkdir -p "${DATADIR}"
 
@@ -16,7 +16,7 @@ do
 
     OUTBASE="${DATADIR}/${SAMPLE}"
     COUNT="${OUTBASE}-count.txt"
-    NBHD="${OUTBASE}-nbhd-count.txt"
+    NBHD="${OUTBASE}-count.txt"
 
     if [[ ! -e "${NBHD}" ]];
     then
@@ -33,5 +33,5 @@ done
 
 wait
 
-python "${BC_TABULATE}" --minsamples 2 -o "${DATADIR}/niks015.txt" `ls ${DATADIR}/niks015-*-nbhd-count.txt`
-python "${BC_TABULATE}" --minsamples 2 -o "${DATADIR}/niks018.txt" `ls ${DATADIR}/niks018-*-nbhd-count.txt`
+"${BC_TABULATE}" --minsamples 2 -o "${DATADIR}/niks015.txt" `ls ${DATADIR}/niks015-*-count.txt`
+"${BC_TABULATE}" --minsamples 2 -o "${DATADIR}/niks018.txt" `ls ${DATADIR}/niks018-*-count.txt`
