@@ -49,4 +49,16 @@ Uses `pacbio-190731-barcode-assign-all.txt` and
 barcodes in the count tables:
 * `niks018-assigned-counts.csv` and `niks015-assigned-counts.csv`
 
+## `peak-shift.R`
 
+Uses count tables to estimate the peak shift for barcodes:
+* `niks015-barcode-mle-peak.csv` and `niks018-barcode-mle-peak.csv`
+and average barcodes for fragments:
+* `niks015-frag-mle-peak.csv` and `niks018-frag-mle-peak.csv`
+
+## `joint-analysis.R`
+
+Merge results from replicate experiments at the barcode and fragment
+level:
+* `joint-barcode-mle-peak.csv`
+* `joint-frag-mle-peak.csv`
