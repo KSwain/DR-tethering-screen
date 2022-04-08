@@ -3,7 +3,6 @@
 Required files:
 * circular consensus sequencing (CCS) file `m64044_190724_081616.ccs.bam`
 * yeast genome Fasta file `saccharomyces_cerevisiae.fa`
-* yeast 
 * [`barcode-assign` tools](https://github.com/ingolia-lab/barcode-assign)
 
 ## `pacbio-barcodes.sh`
@@ -25,5 +24,20 @@ From `bc-pbj`:
 
 ## `pacbio-assign.sh` and `pacbio-assign.R`
 
-Shell script generates `pacbio-190731-facs-assign-gene.bed` and then
-runs the R script to calculate some library statistics.
+Shell script generates:
+*`pacbio-190731-facs-assing.bed`
+* `pacbio-190731-facs-assign-gene.bed`
+and then runs the R script to calculate some library statistics.
+
+# Barcode counting
+
+Required files:
+* [`NCBI SRA Toolkit`](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software) to download FastQ data
+* [`barcode-assign` tools](https://github.com/ingolia-lab/barcode-assign)
+* [`cutadapt`](https://cutadapt.readthedocs.io/en/stable/index.html)
+
+## `count-barcodes.sh`
+
+Processes raw sequencing data to count barcodes
+
+

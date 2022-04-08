@@ -1,0 +1,10 @@
+SRR10353312	niks015-P4FL	far-right sort, replicate 1
+SRR10353313	niks015-P6L	near-right sort, replicate 1
+SRR10353314	niks015-P3R	near-left sort, replicate 1
+SRR10353315	niks015-P7FR	far-left sort, replicate 1
+SRR10353311	niks015-unsort	unsorted, replicate 1
+SRR10353310	niks018-P4FL	far-left sort, replicate 2
+SRR10353309	niks018-P6L	near-left sort, replicate 2
+SRR10353308	niks018-P3R	near-right sort, replicate 2
+SRR10353307	niks018-P7FR	far-right sort, replicate 2
+SRR10353306	niks018-unsort	unsorted, replicate 2
