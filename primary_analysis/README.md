@@ -25,9 +25,10 @@ From `bc-pbj`:
 ## `pacbio-assign.sh` and `pacbio-assign.R`
 
 Shell script generates:
-*`pacbio-190731-facs-assing.bed`
+* `pacbio-190731-facs-assign.bed`
 * `pacbio-190731-facs-assign-gene.bed`
-and then runs the R script to calculate some library statistics.
+and then runs the R script to calculate some library statistics and generate:
+* `pacbio-190731-facs-assign-yorf.txt`
 
 # Barcode counting
 
@@ -38,6 +39,14 @@ Required files:
 
 ## `count-barcodes.sh`
 
-Processes raw sequencing data to count barcodes
+Processes raw sequencing data to count barcodes:
+* `niks015.txt` and `niks018.txt`
+
+## `frag-counts.R`
+
+Uses `pacbio-190731-barcode-assign-all.txt` and
+`pacbio-190731-facs-assign-yorf.txt` to associate a fragment with the
+barcodes in the count tables:
+* `niks018-assigned-counts.csv` and `niks015-assigned-counts.csv`
 
 
