@@ -295,13 +295,13 @@ neg_frags_bed.saveas('frag-seqs/neg_mlep_frags.bed')
 # In[29]:
 
 
-os.system('bedtools getfasta -fi yeastgenomefixed/genomefixed.fsa -bed frag-seqs/pos_mlep_frags.bed -s -fo frag-seqs/pos_mlep_frag_seqs.fasta')
+os.system('bedtools getfasta -fi data/saccharomyces_cerevisiae.fa -bed frag-seqs/pos_mlep_frags.bed -s -fo frag-seqs/pos_mlep_frag_seqs.fasta')
 
 
 # In[30]:
 
 
-os.system('bedtools getfasta -fi yeastgenomefixed/genomefixed.fsa -bed frag-seqs/neg_mlep_frags.bed -s -fo frag-seqs/neg_mlep_frag_seqs.fasta')
+os.system('bedtools getfasta -fi data/saccharomyces_cerevisiae.fa -bed frag-seqs/neg_mlep_frags.bed -s -fo frag-seqs/neg_mlep_frag_seqs.fasta')
 
 
 # In[ ]:
@@ -319,28 +319,28 @@ os.system('bedtools getfasta -fi yeastgenomefixed/genomefixed.fsa -bed frag-seqs
 # In[32]:
 
 
-chr_dir = 'yeastgenome/'
+# chr_dir = 'yeastgenome/'
 
 
-# In[33]:
+# # In[33]:
 
 
-with os.scandir(chr_dir) as chr_files:
-    for chr_entry in chr_files:
-        chrom = chr_entry.name[:5]
-        fixed = chrom + 'fixed.fsa'
-        with open(chr_entry) as original, open(fixed, 'w+') as fixed:
-            records = SeqIO.parse(original, 'fasta')
-            for record in records:
-                record.id = chrom
-                record.description = chrom
-                SeqIO.write(record, fixed, 'fasta')
+# with os.scandir(chr_dir) as chr_files:
+#     for chr_entry in chr_files:
+#         chrom = chr_entry.name[:5]
+#         fixed = chrom + 'fixed.fsa'
+#         with open(chr_entry) as original, open(fixed, 'w+') as fixed:
+#             records = SeqIO.parse(original, 'fasta')
+#             for record in records:
+#                 record.id = chrom
+#                 record.description = chrom
+#                 SeqIO.write(record, fixed, 'fasta')
 
 
 # In[34]:
 
 
-get_ipython().system('cat yeastgenomefixed/*.fsa > yeastgenomefixed/genomefixed.fsa')
+# get_ipython().system('cat yeastgenomefixed/*.fsa > yeastgenomefixed/genomefixed.fsa')
 
 
 # In[ ]:
