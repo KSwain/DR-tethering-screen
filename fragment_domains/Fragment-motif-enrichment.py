@@ -19,8 +19,8 @@ from Bio import SeqIO
 
 
 # Loading the datasets of in-frame fragments from the plus and minus strands
-plus_inframe_df = pd.read_csv('plus_inframe_frags.csv').iloc[:,1:7]
-minus_inframe_df = pd.read_csv('minus_inframe_frags.csv').iloc[:,1:7]
+plus_inframe_df = pd.read_csv('output/plus_inframe_frags.csv').iloc[:,1:7]
+minus_inframe_df = pd.read_csv('output/minus_inframe_frags.csv').iloc[:,1:7]
 
 
 # In[3]:
@@ -51,7 +51,7 @@ minus_inframe_df.head()
 
 
 # Loading the joint-frag-mle-peak dataset
-frag_mlepeak_df = pd.read_csv('joint-frag-mle-peak.csv')[['frag','mlePeak']]
+frag_mlepeak_df = pd.read_csv('../primary_analysis/work-cached/joint-frag-mle-peak.csv')[['frag','mlePeak']]
 frag_mlepeak_df.dropna(axis=0, inplace=True)
 frag_mlepeak_df
 
@@ -226,7 +226,7 @@ def collapse(df, th):
     result = []
     indexA = 0
     indexB = 1
-    while indexA < sortd.shape[0]:
+    while indexB < sortd.shape[0]:
         cluster = []
         A = sortd.iloc[indexA]
         B = sortd.iloc[indexB]
@@ -295,13 +295,13 @@ neg_frags_bed.saveas('frag-seqs/neg_mlep_frags.bed')
 # In[29]:
 
 
-get_ipython().system('bedtools getfasta -fi yeastgenomefixed/genomefixed.fsa -bed frag-seqs/pos_mlep_frags.bed -s -fo frag-seqs/pos_mlep_frag_seqs.fasta')
+os.system('bedtools getfasta -fi yeastgenomefixed/genomefixed.fsa -bed frag-seqs/pos_mlep_frags.bed -s -fo frag-seqs/pos_mlep_frag_seqs.fasta')
 
 
 # In[30]:
 
 
-get_ipython().system('bedtools getfasta -fi yeastgenomefixed/genomefixed.fsa -bed frag-seqs/neg_mlep_frags.bed -s -fo frag-seqs/neg_mlep_frag_seqs.fasta')
+os.system('bedtools getfasta -fi yeastgenomefixed/genomefixed.fsa -bed frag-seqs/neg_mlep_frags.bed -s -fo frag-seqs/neg_mlep_frag_seqs.fasta')
 
 
 # In[ ]:

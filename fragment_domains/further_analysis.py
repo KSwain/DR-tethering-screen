@@ -10,7 +10,7 @@ import seaborn as sns
 
 # Loading the ANNOTATED GENOME dataset as a dataframe
 # I added an empty column to better format it when I convert the DataFrame into a BedTool, it contains no information
-annotations = pybedtools.BedTool('saccharomyces_cerevisiae.bed').to_dataframe()
+annotations = pybedtools.BedTool('data/saccharomyces_cerevisiae.bed').to_dataframe()
 annotations = annotations.drop(['score', 'thickStart', 'thickEnd', 'itemRgb', 'blockCount', 'blockSizes', 'blockStarts'], axis=1)
 annotations['empty'] = np.zeros(annotations['chrom'].size)
 column_titles = ['chrom','start','end','name','empty','strand']
@@ -19,7 +19,7 @@ annotations_bed = pybedtools.BedTool.from_dataframe(annotations).sort()
 annotations.head()
 
 # Loading the FRAGMENT dataset as a BedTool
-fragments = pybedtools.BedTool('pacbio-190731-facs-assign.bed').sort()
+fragments = pybedtools.BedTool('../primary_analysis/work-cached/pacbio-190731-facs-assign.bed').sort()
 fragments_df = fragments.to_dataframe()
 fragments_df.head()
 
@@ -70,7 +70,7 @@ genes_covered.head()
 np.count_nonzero(frag_covg['frag coverage count']) / frag_covg['frag coverage count'].size 
 
 # Saving the fragment coverage dataset as a csv
-frag_covg.to_csv('fragment_coverage.csv')
+frag_covg.to_csv('output/fragment_coverage.csv')
 
 # A scatter plot showing gene length vs. fragment coverage
 plt.scatter(genes_covered['length'], genes_covered['frag coverage fraction'], s=0.5)
@@ -146,17 +146,21 @@ frag_annotations.head()
 
 1 - (np.count_nonzero((frag_annotations['fragStart'] - frag_annotations['geneStart']) % 3 == 0) / frag_annotations['fragStart'].size)
 
+frag_plus_inframe.to_csv('output/plus_inframe_frags.csv')
+frag_minus_inframe.to_csv('output/minus_inframe_frags.csv')
+
+
 from Bio.SeqIO.FastaIO import SimpleFastaParser
 
 ### Fragment-domains, domain presence in each fragment
 
 # Loading the DOMAIN dataset into a dataframe
-domains = pd.read_csv('domains.csv', names=['seq id', 'alignment start', 'alignment end', 'envelope start',
+domains = pd.read_csv('data/domains.csv', names=['seq id', 'alignment start', 'alignment end', 'envelope start',
                                'envelope end', 'hmm acc', 'hmm name', 'type', 'hmm start', 'hmm end',
                                'hmm length', 'bit score', 'E-value', 'clan'])
 
 # Loading table with SEQ ID and corresponding GENE NAMES (ORDERED LOCUS)
-domain_loci = pd.read_csv('uniprot-filtered-proteome_UP000002311+AND+organism__Saccharomyces+cerevisi--.tab', sep='\t')
+domain_loci = pd.read_csv('data/uniprot-filtered-proteome_UP000002311+AND+organism__Saccharomyces+cerevisi--.tab', sep='\t')
 # Merging the domain dataset with domain_loci to add gene locus names onto the domain dataset; dropping uninformative columns
 domains = pd.merge(domains, domain_loci, left_on='seq id', right_on='Entry').drop(['Entry', 'type', 'clan', 'envelope start', 'envelope end',
                                                                                   'hmm start', 'hmm end', 'hmm length', 'bit score', 'E-value'], axis=1)
@@ -181,8 +185,6 @@ domain_bed['domEnd'] = domains_genomic['domain end']
 domain_bed = pybedtools.BedTool.from_dataframe(domain_bed)
 domain_bed.head()
 
-
-
 # Intersecting the fragments and domain datasets to find the presence of domains in each fragment
 frag_domains = fragments.intersect(domain_bed, wo=True, nonamecheck=True).to_dataframe().drop(['thickStart'], axis=1)
 frag_domains.columns = ['chrom','start','end','barcode','score','strand','domStart','domEnd','overlap']
@@ -204,5 +206,5 @@ frag_domain_presence.head()
 
 
 
-frag_domain_presence.to_csv('frag-domain-presence.csv')
+frag_domain_presence.to_csv('output/frag-domain-presence.csv')
 

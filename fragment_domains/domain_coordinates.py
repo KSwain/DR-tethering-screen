@@ -9,16 +9,16 @@ Created on Tue Oct 29 12:57:34 2019
 import pandas as pd
 import pybedtools 
 
-domains = pd.read_table('559292.tsv', header=3, sep='\s',
+domains = pd.read_table('data/559292.tsv', header=3, sep='\s',
                         names=['seq id', 'alignment start', 'alignment end', 'envelope start',
                                'envelope end', 'hmm acc', 'hmm name', 'type', 'hmm start', 'hmm end',
                                'hmm length', 'bit score', 'E-value', 'clan'])
 
-annotations_bed = pybedtools.BedTool('saccharomyces_cerevisiae.bed')
+annotations_bed = pybedtools.BedTool('data/saccharomyces_cerevisiae.bed')
 annotations_df = annotations_bed.to_dataframe()
 
 #Using UniProt data to get ordered locus gene name from seq id
-uniprot = pd.read_table('uniprot-filtered-proteome_UP000002311+AND+organism__Saccharomyces+cerevisi--.tab')
+uniprot = pd.read_table('data/uniprot-filtered-proteome_UP000002311+AND+organism__Saccharomyces+cerevisi--.tab')
 
 domains = pd.merge(domains, uniprot, left_on='seq id', right_on='Entry')
 domains = domains.drop('Entry', axis=1)
@@ -40,11 +40,11 @@ domains_table['chromEnd'] = domains_merged['domain end']
 domains_table['name'] = domains_merged['seq id']
 domains_table['strand'] = domains_merged['strand']
 
-domains_genomic = pybedtools.BedTool.from_dataframe(domains_table).saveas('domains_genomic.bed')
+domains_genomic = pybedtools.BedTool.from_dataframe(domains_table).saveas('output/domains_genomic.bed')
 
 
 x = .75
-sequences = sequences = pybedtools.BedTool('pacbio-190731-facs-assign.bed')
+sequences = sequences = pybedtools.BedTool('../primary_analysis/work-cached/pacbio-190731-facs-assign.bed')
 
 intersections = sequences.intersect(domains_genomic, f=x, wo=True, nonamecheck=True).to_dataframe()
 intersections.columns = ['chrom', 'start', 'end', 'barcode', 'score', 'strand', 'domainChrom', 'domainStart', 'domainEnd', 
@@ -54,4 +54,4 @@ intersections.columns = ['chrom', 'start', 'end', 'barcode', 'score', 'strand', 
 
 fragment_domains = pd.merge(intersections, domains_merged, left_on=['domainID', 'domainStart'], 
                             right_on=['seq id', 'domain start'])
-fragment_domains.to_csv(r'fragment_domains.csv')
+fragment_domains.to_csv(r'output/fragment_domains.csv')
