@@ -413,7 +413,8 @@ with open(neg_seqs) as neg_nuc, open(neg_aa_seqs) as neg_aa, open('frag-seqs/neg
 
 # In[ ]:
 
-
+os.system('meme frag-seqs/neg_aa_seqs_fixed.faa -protein -oc frag-seqs/neg_mlep_meme -nostatus -time 18000 -mod anr -nmotifs 8 -minw 6 -maxw 50 -objfun classic -markov_order 0')
+os.system('meme frag-seqs/pos_aa_seqs_fixed.faa -protein -oc frag-seqs/pos_mlep_meme -nostatus -time 18000 -mod anr -nmotifs 8 -minw 6 -maxw 50 -objfun classic -markov_order 0')
 
 
 
