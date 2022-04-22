@@ -58,7 +58,18 @@ frag_covg.columns = ['chrom', 'start', 'end', 'name', 'empty', 'strand',
                     'frag coverage count', 'bases covered count', 'length', 'frag coverage fraction']
 #frag_covg.dropna(axis=0, inplace=True)
 print(frag_covg.shape)
-frag_covg.head()
+
+## Only nuclear genome
+frag_covg = frag_covg[frag_covg['chrom'].str.match(r"^chr.*")]
+print(frag_covg.shape)
+
+## Key coverage
+print("Fraction of covered genes: {}".format(np.count_nonzero(frag_covg['frag coverage count']) / frag_covg.shape[0]))
+print("Median coverage: {}".format(np.median(frag_covg['frag coverage fraction'])))
+print("Weighted average coverage: {}".format(np.average(frag_covg['frag coverage fraction'], weights=frag_covg['length'])))
+print("Number of covered genes: {}".format(np.count_nonzero(frag_covg['frag coverage count'])))
+frag_covered_covg = frag_covg[frag_covg['frag coverage count'] > 0]
+print("Median coverage across these genes: {}".format(np.median(frag_covered_covg['frag coverage fraction'])))
 
 # Making a dataframe of the genes that are covered by at least one fragment, removing entries with 0 coverage
 # to make a clearer scatter plot below.
