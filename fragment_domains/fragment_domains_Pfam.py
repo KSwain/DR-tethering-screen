@@ -311,7 +311,7 @@ valids
 
 # In[36]:
 
-all_domain_tests.reset_index().to_csv('output/all_comains.csv')
+all_domain_tests.reset_index().to_csv('output/all_domains.csv')
 valids.reset_index().to_csv('output/significant_domains.csv')
 
 
