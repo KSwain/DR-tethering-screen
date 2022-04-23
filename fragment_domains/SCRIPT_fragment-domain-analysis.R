@@ -2,7 +2,7 @@ options(stringsAsFactors=FALSE)
 library(dplyr)
 
 ##read in barcode count and activity data from two screen reps
-joint_frag <- read.csv("~/NIKS018/joint-frag-mle-peak.csv", header = TRUE, sep=",")
+joint_frag <- read.csv("../primary_analysis/work-cached/joint-frag-mle-peak.csv", header = TRUE, sep=",")
 
 head(joint_frag)
 
@@ -64,7 +64,7 @@ rug(Ded1_18$mlePeak.18, ticksize = 0.1, col = "blue",lwd=1.25)
 ded_means <- Ded1_18 %>% summarize(mean=mean(mlePeak.18))
 ded_means
 
-png(file="~/NIKS018/density_ded1only.png",width=1200,height=1000,res=288)
+png(file="output/density_ded1only.png",width=1200,height=1000,res=288)
 plot_ded <- ggplot(Ded1_18, aes(x=mlePeak.18)) +
   geom_density(color="turquoise3", fill="lightcyan", size=1) +
   geom_vline(aes(xintercept=mean(mlePeak.18)),
@@ -89,7 +89,7 @@ rug(Ccr4_18$mlePeak.18, ticksize = 0.05, col = "red", lwd = 1.5)
 
 ccr_means <- Ccr4_18 %>% summarize(mean=mean(mlePeak.18))
 ccr_means
-png(file="~/NIKS018/density_ccr4only.png",width=1200,height=1000,res=288)
+png(file="output/density_ccr4only.png",width=1200,height=1000,res=288)
 plot_ccr <- ggplot(Ccr4_18, aes(x=mlePeak.18)) +
   geom_density(color="indianred1", fill="mistyrose1", size=1) +
   geom_vline(aes(xintercept=mean(mlePeak.18)),
@@ -109,7 +109,7 @@ histogram_18 <- ggplot(mle18, aes(x=mlePeak.18)) +
 histogram_18
 
 #plot all fragments in screen according to activity score 
-png(file="~/NIKS018/NIKS018_mlepeakdistribution.png",width=1200,height=1000,res=288)
+png(file="output/NIKS018_mlepeakdistribution.png",width=1200,height=1000,res=288)
 all_18 <- ggplot(present_18, aes(x=mlePeak.18)) +
   geom_density(color="gray35", fill = "darkslategray2", size=0.75) +
   geom_vline(aes(xintercept=mean(mlePeak.18)),
@@ -128,7 +128,7 @@ library(plyr)
 cdat <- ddply(genes, "gene", summarise, mle.mean=mean(mlePeak.18))
 cdat
 
-png(file="~/NIKS018/Ded1vCcr4.png",width=1200,height=1000,res=288)
+png(file="output/Ded1vCcr4.png",width=1200,height=1000,res=288)
 plot_genes <- ggplot(genes, aes(x=mlePeak.18, color=gene)) +
   geom_density(size=0.75) +
   geom_vline(data=cdat, aes(xintercept=mle.mean, colour=gene),
@@ -143,7 +143,7 @@ dev.off()
 
 #### plot fragment size distribution
 
-pacbio_frag <- read.csv("~/NIKS018/fragment_chrom_coord.csv", header = TRUE, sep= ",")
+pacbio_frag <- read.csv("output/fragment_chrom_coord.csv", header = TRUE, sep= ",")
 head(pacbio_frag)
 pacbio_frag$X = NULL
 pacbio_frag$length = pacbio_frag$start - pacbio_frag$end
@@ -154,7 +154,7 @@ pacbio_means$mean <- round(pacbio_means$mean)
 pacbio_means
 
 
-png(file="~/NIKS018/PacbiogDNA_size-distribution.png",width=600,height=500,res=144)
+png(file="output/PacbiogDNA_size-distribution.png",width=600,height=500,res=144)
 length_df <- ggplot(pacbio_frag, aes(x=length)) +
   geom_density(color="gray25", fill = "lightcoral", size=0.75) +
   geom_vline(aes(xintercept=mean(length)),
@@ -167,7 +167,7 @@ dev.off()
 
 ### working with identified domains:                                            
 
-all_domains <- read.csv("~/revisions/all_domains.csv", header=TRUE, sep=",")
+all_domains <- read.csv("output/all_domains.csv", header=TRUE, sep=",")
 head(all_domains)
 dim(all_domains)
 
@@ -187,7 +187,7 @@ valids$fullname = c("Adenylosuccinate synthase", "Initiation factor 2 subunit fa
 valids$fullname <- factor(valids$fullname, levels = valids$fullname[order(-valids$mlePeak)])
 valids
 
-png(file="~/revisions/domaincount_padj_hires.png", width=2400,height=2400,res=250)
+png(file="output/domaincount_padj_hires.png", width=2400,height=2400,res=250)
 valids %>%
   ggplot(aes(x=mlePeak,
              y=fullname,
@@ -213,7 +213,7 @@ sgd <- read.delim("SGD_features.tab", header=FALSE, quote="",
 head(sgd)
 # 
 
-joint_barcode <- read.csv("~/NIKS018/joint-barcode-mle-peak.csv", header=TRUE, sep=",")
+joint_barcode <- read.csv("../primary_analysis/work-cached/joint-barcode-mle-peak.csv", header=TRUE, sep=",")
 dim(joint_barcode)
 head(joint_barcode)
 # 
@@ -237,7 +237,7 @@ dim(mlescores)
 head(mlescores)
 
 ## load in non-collapsed by 90% identity fragments: 
-frags_mle <- read.csv("~/revisions/frags_coordinates_mlep.csv", header = TRUE, sep = ",")
+frags_mle <- read.csv("output/frags_coordinates_mlep.csv", header = TRUE, sep = ",")
 dim(frags_mle)
 head(frags_mle)
 
@@ -279,7 +279,7 @@ head(strandcorrect_db)
 strandcorrect_db$mlePeak.15 <- strandcorrect_db$mlePeak.15 * -1
 strandcorrect_db$X = NULL
 
-write.csv(strandcorrect_db, file= "~/revisions/fragment_protein_coordinates-minusstrandcorrect.csv")
+write.csv(strandcorrect_db, file= "output/fragment_protein_coordinates-minusstrandcorrect.csv")
 
 ## strandcorrect_db = coordinates of all fragments in our in-frame database
 head(strandcorrect_db)
@@ -297,9 +297,9 @@ head(fragment_db)
 dim(fragment_db)
 
 cor(fragment_db$mlePeak.15, fragment_db$mlePeak.18)
-write.csv(fragment_db, file= "~/revisions/fragment_db_all-minuscorrect.csv")
+write.csv(fragment_db, file= "output/fragment_db_all-minuscorrect.csv")
 
-mlevFC <- read.csv("~/NIKS018/mlevFC.csv", header = TRUE, sep=",")
+mlevFC <- read.csv("data/mlevFC.csv", header = TRUE, sep=",")
 mlevFC
 mlevFC$fragment = factor(mlevFC$fragment, levels=mlevFC[order(mlevFC$mlePeak18), "fragment"])
 mlevFC$logFC = log2(mlevFC$FC)
@@ -320,7 +320,7 @@ mytheme <- theme(axis.line = element_line(size = 1.0, colour = "gray30"),
                  panel.background = element_rect(fill = "white"))
 
 
-png(file="~/NIKS018/mlevFCscore.png", width=1800,height=1800,res=432)
+png(file="output/mlevFCscore.png", width=1800,height=1800,res=432)
 mFCdots <- ggplot(mlevFC, aes(x=mlePeak18, y=logFC)) + 
   geom_point(aes(colour = factor(fragment)), size=2.5) + 
   geom_smooth(method=lm, se=FALSE, color="gray70", linetype="dashed", size=0.75)  + theme_minimal() +
@@ -344,7 +344,7 @@ Ded1_all <- Ded1_all[,c(1,4,5,7,8)]
 head(Ded1_all)
 
 
-png(file="~/NIKS018/Ded1_dotplot.png", width=1200,height=1000,res=288)
+png(file="output/Ded1_dotplot.png", width=1200,height=1000,res=288)
 ded1plot <- ggplot(Ded1_all, aes(x=proteinEnd, y=mlePeak.18)) + geom_point(size=1, color="seagreen3") + 
     geom_smooth(method=lm, se=TRUE, color="palevioletred2", linetype="dashed", size=1, fill="mistyrose1") +
   xlim(0,110) + theme_minimal() +
@@ -379,7 +379,7 @@ plot(density(C_mid$mlePeak.18))
 plot(density(C_llr$mlePeak.18))
 
 
-png(file="~/NIKS018/density_ccr4nterm.png",width=1200,height=1000,res=288)
+png(file="output/density_ccr4nterm.png",width=1200,height=1000,res=288)
 plot_n <- ggplot(C_nterm, aes(x=mlePeak.18)) +
   geom_density(color="tomato2", size=1) +
   geom_vline(aes(xintercept=mean(mlePeak.18)),
@@ -392,7 +392,7 @@ plot_n <- ggplot(C_nterm, aes(x=mlePeak.18)) +
 plot_n
 dev.off()
 
-png(file="~/NIKS018/density_ccr4mid.png",width=1200,height=1000,res=288)
+png(file="output/density_ccr4mid.png",width=1200,height=1000,res=288)
 plot_mid <- ggplot(C_mid, aes(x=mlePeak.18)) +
   geom_density(color="sienna2", size=1) +
   geom_vline(aes(xintercept=mean(mlePeak.18)),
@@ -405,7 +405,7 @@ plot_mid <- ggplot(C_mid, aes(x=mlePeak.18)) +
 plot_mid
 dev.off()
 
-png(file="~/NIKS018/density_ccr4llr.png",width=1200,height=1000,res=288)
+png(file="output/density_ccr4llr.png",width=1200,height=1000,res=288)
 plot_llr <- ggplot(C_llr, aes(x=mlePeak.18)) +
   geom_density(color="tan1", size=1) +
   geom_vline(aes(xintercept=mean(mlePeak.18)),
@@ -417,13 +417,13 @@ plot_llr <- ggplot(C_llr, aes(x=mlePeak.18)) +
 plot_llr
 dev.off()
 
-neg_motif <- read.csv("~/NIKS018/neg_mlep_motif_genes.csv", header=TRUE, sep=",")
+neg_motif <- read.csv("output/neg_mlep_motif_genes.csv", header=TRUE, sep=",")
 head(neg_motif)
 
 neg_motif$gene <- sgd[match(neg_motif$sequence_name, sgd$name), "gene"]
 
 
-pos_motif <- read.csv("~/NIKS018/pos_mlep_motif_genes.csv", header = TRUE, sep=",")
+pos_motif <- read.csv("output/pos_mlep_motif_genes.csv", header = TRUE, sep=",")
 head(pos_motif)
 pos_motif <- subset(pos_motif,
                     pos_motif$q.value < 0.08)
@@ -459,7 +459,7 @@ v
 # motif 6 = 618
 
 ## repressors motifs:
-neg_motif <- read.csv("~/NIKS018/neg_mlep_motif_genes.csv", header = TRUE, sep=",")
+neg_motif <- read.csv("output/neg_mlep_motif_genes.csv", header = TRUE, sep=",")
 head(neg_motif)
 neg_motif <- subset(neg_motif,
                     neg_motif$q.value < 0.08)
